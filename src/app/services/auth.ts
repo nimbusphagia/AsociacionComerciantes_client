@@ -17,7 +17,7 @@ export class Auth {
 
   login(email: string, contrasena: string): Observable<LoginResponse> {
     return this.http
-      .post<LoginResponse>(`${this.apiUrl}/usuarios/login`, { email, contrasena })
+      .post<LoginResponse>(`${this.apiUrl}/auth/login`, { email, contrasena })
       .pipe(
         tap((res) => {
           localStorage.setItem('token', res.token);

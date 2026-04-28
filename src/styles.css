@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+    --bg-body: #282828;
+    --bg-sidebar: #32302f;
+    --bg-card: #32302f;
+    --bg-input: #3c3836;
+    --bg-darker: #1d2021;
+
+    --text-main: #d4be98;
+    --text-muted: #a89984;
+    --border-color: #504945;
+
+    --accent-blue: #7daea3;
+    --accent-yellow: #d8a657;
+    --accent-red: #ea6962;
+    --accent-orange: #e78a4e;
+    --accent-green: #a9b665;
+    --accent-purple: #d3869b;
+}
+body{
+  margin:0;
+  padding:0;
+}

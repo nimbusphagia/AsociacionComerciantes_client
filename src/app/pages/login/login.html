@@ -1,8 +1,10 @@
 <main class="main">
   <form class="form" (ngSubmit)="onSubmit()">
 
-    <h1 class="formTitle">Welcome back</h1>
-    <p class="formSubtitle">Sign in to your account</p>
+    <header class="formHeader">
+      <h1 class="formTitle">Asosiacion de Comerciantes</h1>
+      <p class="formSubtitle">Ingresa tus datos para iniciar sesion</p>
+    </header>
 
     @if (errorMessage) {
       <div class="errorBanner">{{ errorMessage }}</div>
@@ -15,14 +17,14 @@
         type="email"
         [(ngModel)]="email"
         name="email"
-        placeholder="you@example.com"
+        placeholder="email@example.com"
         autocomplete="email"
         required
       />
     </div>
 
     <div class="formItem">
-      <label for="contrasena">Password</label>
+      <label for="contrasena">Contraseña</label>
       <input
         id="contrasena"
         type="password"
@@ -36,9 +38,9 @@
 
     <button type="submit" [disabled]="isLoading" class="btn">
       @if (isLoading) {
-        Signing in…
+        Iniciando sesion…
       } @else {
-        Sign in
+        Iniciar sesion
       }
     </button>
 
