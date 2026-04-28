@@ -1,0 +1,46 @@
+<main class="main">
+  <form class="form" (ngSubmit)="onSubmit()">
+
+    <h1 class="formTitle">Welcome back</h1>
+    <p class="formSubtitle">Sign in to your account</p>
+
+    @if (errorMessage) {
+      <div class="errorBanner">{{ errorMessage }}</div>
+    }
+
+    <div class="formItem">
+      <label for="email">Email</label>
+      <input
+        id="email"
+        type="email"
+        [(ngModel)]="email"
+        name="email"
+        placeholder="you@example.com"
+        autocomplete="email"
+        required
+      />
+    </div>
+
+    <div class="formItem">
+      <label for="contrasena">Password</label>
+      <input
+        id="contrasena"
+        type="password"
+        [(ngModel)]="contrasena"
+        name="contrasena"
+        placeholder="••••••••"
+        autocomplete="current-password"
+        required
+      />
+    </div>
+
+    <button type="submit" [disabled]="isLoading" class="btn">
+      @if (isLoading) {
+        Signing in…
+      } @else {
+        Sign in
+      }
+    </button>
+
+  </form>
+</main>
