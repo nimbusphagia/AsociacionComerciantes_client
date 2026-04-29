@@ -1,0 +1,20 @@
+<div class="layout">
+  <aside class="sidebar">
+    <header class="sidebarHeader">
+      <h1 class="sidebarTitle">Gestion Comerciantes</h1>
+    </header>
+    <nav class="routeLinks">
+      <a routerLink="/home" routerLinkActive="active" class="routeLink">Inicio</a>
+      <a routerLink="/deudas" routerLinkActive="active" class="routeLink">Deudas Pendientes</a>
+      <a routerLink="/puestos" routerLinkActive="active" class="routeLink">Gestionar Puestos</a>
+      <a routerLink="/socios" routerLinkActive="active" class="routeLink">Gestionar Socios</a>
+    </nav>
+  <footer class="sidebarFooter">
+      <button class="dangerBtn" (click)="logout()">Cerrar sesión</button>
+  </footer>
+  </aside>
+  <main class="content">
+    <router-outlet />
+
+  </main>
+</div>

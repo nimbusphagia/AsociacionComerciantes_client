@@ -1,23 +1,53 @@
 /* You can add global styles to this file, and also import other style files */
 :root {
-    --bg-body: #282828;
-    --bg-sidebar: #32302f;
-    --bg-card: #32302f;
-    --bg-input: #3c3836;
-    --bg-darker: #1d2021;
+  --bg-body: #282828;
+  --bg-sidebar: #32302f;
+  --bg-card: #32302f;
+  --bg-input: #3c3836;
+  --bg-darker: #1d2021;
 
-    --text-main: #d4be98;
-    --text-muted: #a89984;
-    --border-color: #504945;
+  --text-main: #d4be98;
+  --text-muted: #a89984;
+  --border-color: #504945;
 
-    --accent-blue: #7daea3;
-    --accent-yellow: #d8a657;
-    --accent-red: #ea6962;
-    --accent-orange: #e78a4e;
-    --accent-green: #a9b665;
-    --accent-purple: #d3869b;
+  --accent-blue: #7daea3;
+  --accent-yellow: #d8a657;
+  --accent-red: #ea6962;
+  --accent-orange: #e78a4e;
+  --accent-green: #a9b665;
+  --accent-purple: #d3869b;
 }
-body{
-  margin:0;
-  padding:0;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg-body);
+  color: var(--text-main);
+  font-family: Helvetica, sans-serif;
+  height: 100vh;
+}
+
+a,
+button {
+  display: block;
+  color: inherit;
+}
+
+.dangerBtn {
+  padding: 0.5rem 0.75rem;
+  border-radius: 5px;
+  border: none;
+  background: transparent;
+  color: var(--accent-red);
+  font-size: inherit;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.dangerBtn:hover {
+  background: var(--bg-input);
 }
