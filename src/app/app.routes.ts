@@ -3,6 +3,9 @@ import { Home } from "./pages/home/home"
 import { Login } from './pages/login/login';
 import { authGuard } from './guards/auth-guard';
 import { MainLayout } from './layouts/main-layout/main-layout';
+import { Deudas } from './pages/deudas/deudas';
+import { Puestos } from './pages/puestos/puestos';
+import { Socios } from './pages/socios/socios';
 
 export const routes: Routes = [
   {
@@ -17,7 +20,19 @@ export const routes: Routes = [
     children: [
       {
         path: 'home',
-        component: Home
+        component: Home,
+      },
+      {
+        path: 'deudas',
+        component: Deudas,
+      },
+      {
+        path: 'puestos',
+        component: Puestos,
+      },
+      {
+        path: 'socios',
+        component: Socios,
       },
     ]
   },

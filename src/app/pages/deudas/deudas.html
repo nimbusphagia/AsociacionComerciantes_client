@@ -1,0 +1,48 @@
+<div class="page">
+  <h1 class="title">Deudas Pendientes</h1>
+
+  @if (isLoading()) {
+    <p class="muted">Cargando...</p>
+  }
+
+  @if (errorMessage()) {
+    <p class="error">{{ errorMessage() }}</p>
+  }
+
+  @if (!isLoading() && deudas().length === 0) {
+    <p class="muted">No hay deudas pendientes.</p>
+  }
+
+  @if (!isLoading() && deudas().length > 0) {
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Período</th>
+          <th>Vencimiento</th>
+          <th>Monto</th>
+          <th>Estado</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (deuda of deudas(); track deuda.id) {
+          <tr>
+            <td>{{ deuda.periodo }}</td>
+            <td>{{ deuda.fechaVencimiento | date:'dd/MM/yyyy' }}</td>
+            <td>{{ deuda.montoTotal | currency:'PEN' }}</td>
+            <td>
+              <span class="badge" [class]="deuda.estado.toLowerCase()">
+                {{ deuda.estado }}
+              </span>
+            </td>
+            <td>
+              <button class="btn" (click)="registrarPago(deuda)">
+                Registrar Pago
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>

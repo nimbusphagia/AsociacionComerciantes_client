@@ -1,0 +1,41 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.title {
+  font-size: 1.4rem;
+  color: var(--text-main);
+}
+
+
+.badge.pendiente {
+  background: var(--bg-input);
+  color: var(--accent-yellow);
+}
+
+.badge.pagada {
+  background: var(--bg-input);
+  color: var(--accent-green);
+}
+
+.badge.vencida {
+  background: var(--bg-input);
+  color: var(--accent-red);
+}
+
+.btn {
+  padding: 0.35rem 0.75rem;
+  background: var(--accent-blue);
+  color: var(--bg-darker);
+  border: none;
+  border-radius: 5px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.btn:hover {
+  opacity: 0.85;
+}
