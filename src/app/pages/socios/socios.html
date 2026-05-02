@@ -1,1 +1,193 @@
-<p>socios works!</p>
+<div class="page">
+  <header class="pageHeader">
+    <h1 class="title">Gestión de Socios</h1>
+    <button class="btn" (click)="abrirCrearModal()">+ Nuevo Socio</button>
+  </header>
+
+  @if (isLoading()) {
+    <p class="muted">Cargando socios...</p>
+  }
+  @if (errorMessage()) {
+    <p class="error">{{ errorMessage() }}</p>
+  }
+  @if (deleteError()) {
+    <p class="error">{{ deleteError() }}</p>
+  }
+  @if (!isLoading() && socios().length === 0) {
+    <p class="muted">No hay socios registrados.</p>
+  }
+
+  @if (!isLoading() && socios().length > 0) {
+    <table class="table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Nombre</th>
+          <th>DNI</th>
+          <th>Celular</th>
+          <th>Email</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (socio of socios(); track socio.id) {
+          <tr [class.expanded]="isExpanded(socio)">
+            <td style="max-width: fit-content">
+              <button class="expandBtn" (click)="toggleDetalle(socio)">
+                {{ isExpanded(socio) ? '▾' : '▸' }}
+              </button>
+            </td>
+            <td>
+              <strong>{{ socio.nombreCompleto }}</strong>
+            </td>
+            <td>{{ socio.dni }}</td>
+            <td>{{ socio.celular }}</td>
+            <td>{{ socio.email }}</td>
+            <td>
+              <span class="badge" [class]="socio.activo ? 'activo' : 'inactivo'">
+                {{ socio.activo ? 'Activo' : 'Inactivo' }}
+              </span>
+            </td>
+            <td>
+              <div class="actionsCell">
+                <button class="actionBtn" (click)="abrirEditarModal(socio)">Editar</button>
+                <button
+                  class="dangerBtn actionBtn"
+                  (click)="eliminarSocio(socio.id)"
+                  [disabled]="eliminando() === socio.id"
+                >
+                  {{ eliminando() === socio.id ? '...' : 'Eliminar' }}
+                </button>
+              </div>
+            </td>
+          </tr>
+
+          <!-- expanded detail row -->
+          @if (isExpanded(socio)) {
+            <tr class="detalleRow">
+              <td colspan="7">
+                @if (detalleLoading()) {
+                  <p class="muted">Cargando detalle...</p>
+                }
+                @if (detalleError()) {
+                  <p class="error">{{ detalleError() }}</p>
+                }
+                @if (detalle()) {
+                  <div class="detalle">
+                    <div class="detalleSection">
+                      <h3 class="detalleTitle">Puestos</h3>
+                      @if (detalle()!.puestos.length === 0) {
+                        <p class="muted">Sin puestos asignados.</p>
+                      } @else {
+                        @for (puesto of detalle()!.puestos; track puesto.id) {
+                          <div class="detalleItem">
+                            <span>{{ puesto.codigo }} — {{ puesto.nombre }}</span>
+                            <span class="muted">{{ puesto.direccion }}</span>
+                          </div>
+                        }
+                      }
+                    </div>
+
+                    <div class="detalleSection">
+                      <h3 class="detalleTitle">Deudas Pendientes</h3>
+                      @if (detalle()!.deudasPendientes.length === 0) {
+                        <p class="muted">Sin deudas pendientes.</p>
+                      } @else {
+                        @for (deuda of detalle()!.deudasPendientes; track deuda.id) {
+                          <div class="detalleItem">
+                            <span>{{ deuda.periodo }}</span>
+                            <span>{{ deuda.montoTotal | currency: 'PEN' }}</span>
+                            <span class="badge" [class]="deuda.estado.toLowerCase()">
+                              {{ deuda.estado }}
+                            </span>
+                          </div>
+                        }
+                      }
+                    </div>
+                  </div>
+                }
+              </td>
+            </tr>
+          }
+        }
+      </tbody>
+    </table>
+  }
+
+  <!-- form modal -->
+  @if (mostrarModal()) {
+    <div class="modalOverlay">
+      <div class="panel modal">
+        <h2 class="panelTitle">
+          {{ esEdicion() ? 'Editar Socio' : 'Nuevo Socio' }}
+        </h2>
+
+        <div class="formGroup">
+          <label class="label">Nombre Completo</label>
+          <input
+            type="text"
+            class="input"
+            placeholder="Ej. Juan Pérez"
+            [(ngModel)]="socioForm().nombreCompleto"
+          />
+        </div>
+        <div class="formRow">
+          <div class="formGroup">
+            <label class="label">DNI</label>
+            <input type="text" class="input" placeholder="12345678" [(ngModel)]="socioForm().dni" />
+          </div>
+          <div class="formGroup">
+            <label class="label">RUC</label>
+            <input
+              type="text"
+              class="input"
+              placeholder="20123456789"
+              [(ngModel)]="socioForm().ruc"
+            />
+          </div>
+        </div>
+        <div class="formRow">
+          <div class="formGroup">
+            <label class="label">Celular</label>
+            <input
+              type="text"
+              class="input"
+              placeholder="999 999 999"
+              [(ngModel)]="socioForm().celular"
+            />
+          </div>
+          <div class="formGroup">
+            <label class="label">Email</label>
+            <input
+              type="email"
+              class="input"
+              placeholder="juan@email.com"
+              [(ngModel)]="socioForm().email"
+            />
+          </div>
+        </div>
+        <div class="formGroup">
+          <label class="label">Dirección</label>
+          <input
+            type="text"
+            class="input"
+            placeholder="Ej. Av. Principal 123"
+            [(ngModel)]="socioForm().direccion"
+          />
+        </div>
+
+        @if (formError()) {
+          <p class="error">{{ formError() }}</p>
+        }
+
+        <div class="panelActions">
+          <button class="btnSecondary" (click)="cerrarModal()">Cancelar</button>
+          <button class="btn" [disabled]="guardando()" (click)="guardarSocio()">
+            {{ guardando() ? 'Guardando...' : esEdicion() ? 'Actualizar' : 'Registrar' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</div>
