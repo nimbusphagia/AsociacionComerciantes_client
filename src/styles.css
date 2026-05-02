@@ -114,7 +114,8 @@ tr.disabled {
   color: var(--text-muted);
 }
 .badge {
-  padding: 2px 12px;
+  height: 100%;
+  padding: 5px 12px;
   border-radius: 3px;
   font-size: 0.8rem;
   font-weight: 600;

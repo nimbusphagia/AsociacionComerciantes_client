@@ -1,1 +1,90 @@
-<p>home works!</p>
+<div class="page">
+  <header class="pageHeader">
+    <h1 class="title">Inicio</h1>
+  </header>
+
+  @if (isLoading()) {
+    <p class="muted">Cargando...</p>
+  }
+  @if (errorMessage()) {
+    <p class="error">{{ errorMessage() }}</p>
+  }
+
+  @if (!isLoading()) {
+    @if (deudasVencidas().length > 0) {
+      <div class="alert">
+        <span
+          >⚠ Hay {{ deudasVencidas().length }} deuda(s) vencidas por un total de
+          {{ montoVencido() | currency: 'PEN' }}</span
+        >
+      </div>
+    }
+
+    <div class="cards">
+      <div class="card">
+        <p class="cardLabel">Socios Activos</p>
+
+        <div class="cardBody">
+          <p class="cardValue">{{ totalSocios() }}</p>
+        </div>
+      </div>
+      <div class="card">
+        <p class="cardLabel">Puestos Ocupados</p>
+        <div class="cardBody">
+          <p class="cardValue">
+            {{ puestosOcupados() }} <span class="cardSub">/ {{ totalPuestos() }}</span>
+          </p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="cardHeader">
+          <p class="cardLabel">Deudas Pendientes</p>
+        </div>
+
+        <div class="cardBody">
+          <p class="cardValue">{{ deudasPendientes().length }}</p>
+          <p class="cardSub">{{ montoPendiente() | currency: 'PEN' }}</p>
+        </div>
+      </div>
+      <div class="card" [class.danger]="deudasVencidas().length">
+        <div class="cardHeader">
+          <p class="cardLabel">Deudas Vencidas</p>
+        </div>
+        <div class="cardBody">
+          <p class="cardValue">{{ deudasVencidas().length }}</p>
+          <p class="cardSub">{{ montoVencido() | currency: 'PEN' }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="sectionTitle">Últimos Pagos</h2>
+      @if (ultimosPagos().length === 0) {
+        <p class="muted">No hay pagos registrados.</p>
+      } @else {
+        <table class="table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Socio</th>
+              <th>Monto</th>
+              <th>Fecha</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (pago of ultimosPagos(); track pago.id) {
+              <tr>
+                <td class="muted">{{ pago.id }}</td>
+                <td>
+                  <strong>{{ pago.nombreSocio }}</strong>
+                </td>
+                <td>{{ pago.montoTotal | currency: 'PEN' }}</td>
+                <td>{{ pago.fecha | date: 'dd/MM/yyyy' }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    </div>
+  }
+</div>
