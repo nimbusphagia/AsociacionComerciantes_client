@@ -1,0 +1,28 @@
+.pageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.textLeft {
+  text-align: left;
+}
+
+.actionsCell {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+}
+.actionsCell > * {
+  margin: auto;
+}
+.deactivate,
+.activate {
+  font-size: 0.9em;
+  padding: 6px 10px;
+  font-weight: 600;
+}
+.activate {
+  color: var(--accent-green);
+}

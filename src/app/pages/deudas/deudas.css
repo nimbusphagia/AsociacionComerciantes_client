@@ -72,10 +72,3 @@
   justify-content: space-between;
   padding: 5px;
 }
-
-.panelActions {
-  display: flex;
-  justify-content: space-between;
-  padding: 5px;
-  gap: 0.75rem;
-}

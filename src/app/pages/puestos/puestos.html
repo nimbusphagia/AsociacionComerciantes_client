@@ -1,1 +1,161 @@
-<p>puestos works!</p>
+<div class="page">
+  <header class="pageHeader">
+    <div>
+      <h1 class="title">Gestión de Puestos</h1>
+    </div>
+    <button class="btn" (click)="abrirCrearModal()">+ Nuevo Puesto</button>
+  </header>
+
+  @if (isLoading()) {
+    <p class="muted">Cargando puestos...</p>
+  }
+  @if (errorMessage()) {
+    <p class="error">{{ errorMessage() }}</p>
+  }
+
+  @if (!isLoading() && puestos().length === 0) {
+    <p class="muted">No hay puestos registrados.</p>
+  }
+
+  @if (!isLoading() && puestos().length > 0) {
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Nombre</th>
+          <th>Dirección</th>
+          <th>Dueño</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (puesto of puestos(); track puesto.id) {
+          <tr>
+            <td>
+              <strong>{{ puesto.codigo }}</strong>
+            </td>
+            <td>{{ puesto.nombre }}</td>
+            <td>{{ puesto.direccion }}</td>
+            <td>
+              @if (puesto.socioId) {
+                <span>{{ puesto.nombreSocio }}</span>
+              } @else {
+                <span class="badge pagada">Asociacion</span>
+              }
+            </td>
+            <td style="max-width: 200px">
+              <div class="actionsCell">
+                @if (puesto.socioId) {
+                  <button class="btnSecondary deactivate" (click)="desasignarSocio(puesto.id)">
+                    Desasignar
+                  </button>
+                } @else {
+                  <button class="btnSecondary activate" (click)="abrirAsignarSocioModal(puesto)">
+                    Asignar
+                  </button>
+                }
+                <button class="actionBtn" (click)="abrirEditarModal(puesto)">Editar</button>
+                <button
+                  class="dangerBtn actionBtn"
+                  (click)="eliminarPuesto(puesto.id)"
+                  [disabled]="puesto.socioId !== null"
+                  [title]="
+                    puesto.socioId !== null ? 'No se puede eliminar un puesto con dueño' : ''
+                  "
+                >
+                  Eliminar
+                </button>
+              </div>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+
+  @if (mostrarModalForm()) {
+    <div class="modalOverlay">
+      <div class="panel modal">
+        <h2 class="panelTitle">
+          {{ esEdicion() ? 'Editar Puesto' : 'Crear Nuevo Puesto' }}
+        </h2>
+
+        <div class="formGroup">
+          <label for="codigo" class="label">Código del Puesto</label>
+          <input
+            type="text"
+            id="codigo"
+            class="input"
+            placeholder="Ej. A-102"
+            [(ngModel)]="puestoForm().codigo"
+          />
+        </div>
+
+        <div class="formGroup">
+          <label for="nombre" class="label">Nombre del Puesto</label>
+          <input
+            type="text"
+            id="nombre"
+            class="input"
+            placeholder="Ej. Puesto de Frutas"
+            [(ngModel)]="puestoForm().nombre"
+          />
+        </div>
+
+        <div class="formGroup">
+          <label for="direccion" class="label">Dirección / Ubicación</label>
+          <input
+            type="text"
+            id="direccion"
+            class="input"
+            placeholder="Ej. Pasillo B - Int 4"
+            [(ngModel)]="puestoForm().direccion"
+          />
+        </div>
+
+        @if (puestoError()) {
+          <p class="error">{{ puestoError() }}</p>
+        }
+
+        <div class="panelActions">
+          <button class="btnSecondary" (click)="cerrarFormModal()">Cancelar</button>
+          <button class="btn" [disabled]="guardando()" (click)="guardarPuesto()">
+            {{ guardando() ? 'Guardando...' : esEdicion() ? 'Actualizar' : 'Registrar' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+
+  @if (mostrarModalSocio()) {
+    <div class="modalOverlay">
+      <div class="panel modal">
+        <h2 class="panelTitle">Asignar Socio</h2>
+        <p class="muted textLeft">
+          Asigna un dueño al puesto: <strong>{{ puestoSeleccionado()?.codigo }}</strong>
+        </p>
+
+        <div class="formGroup">
+          <label for="socioSelect" class="label">Seleccionar Socio</label>
+          <select id="socioSelect" class="input" [(ngModel)]="selectedSocioId">
+            <option [value]="null" disabled selected>Elige un socio...</option>
+            @for (socio of socios(); track socio.id) {
+              <option [value]="socio.id">{{ socio.nombreCompleto }}</option>
+            }
+          </select>
+        </div>
+
+        @if (socioError()) {
+          <p class="error">{{ socioError() }}</p>
+        }
+
+        <div class="panelActions">
+          <button class="btnSecondary" (click)="cerrarSocioModal()">Cancelar</button>
+          <button class="btn" [disabled]="asignando()" (click)="confirmarAsignacion()">
+            {{ asignando() ? 'Asignando...' : 'Guardar Cambios' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</div>
