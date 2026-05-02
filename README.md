@@ -1,59 +1,95 @@
-# AsociacionComerciantes
+# Sistema de Gestión de Mercado — Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.8.
+Interfaz web desarrollada en Angular para la gestión de socios, puestos, tarifas, deudas y pagos desde un panel centralizado.
 
-## Development server
+---
 
-To start a local development server, run:
+## 🚀 Tecnologías
 
-```bash
-ng serve
-```
+- Angular 21 (standalone, signals, zoneless)
+- TypeScript
+- RxJS
+- Angular Router
+- HttpClient con interceptor JWT
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+---
 
-## Code scaffolding
+## ✨ Funcionalidades
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### 🔐 Autenticación
+- Login con email y contraseña
+- Token JWT almacenado en localStorage
+- Rutas protegidas mediante guard
+- Interceptor que adjunta el token en cada petición
 
-```bash
-ng generate component component-name
-```
+---
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### 📊 Dashboard
+- Resumen de socios, puestos y deudas
+- Indicador de deudas vencidas
+- Últimos pagos registrados
 
-```bash
-ng generate --help
-```
+---
 
-## Building
+### 👥 Socios
+- CRUD de socios
+- Vista detallada con:
+  - Puestos asignados
+  - Deudas pendientes
 
-To build the project run:
+---
 
-```bash
-ng build
-```
+### 🏪 Puestos
+- CRUD de puestos
+- Asignación de socios
+- Puestos sin socio pertenecen a la asociación
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+---
 
-## Running unit tests
+### 💰 Tarifas
+- CRUD de tarifas
+- Tipos de recurrencia:
+  - Mensual
+  - Anual
+  - Único
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+---
 
-```bash
-ng test
-```
+### 🧾 Deudas
+- Generadas por **puesto**
+- Un socio con múltiples puestos tiene deudas independientes
+- Permite seleccionar múltiples deudas del mismo puesto para un solo pago
+- Registro de comprobantes (boleta o factura)
 
-## Running end-to-end tests
+---
 
-For end-to-end (e2e) testing, run:
+### 💳 Pagos
+- Historial de pagos
+- Visualización de comprobantes
 
-```bash
-ng e2e
-```
+---
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## 🔒 Seguridad
 
-## Additional Resources
+El sistema utiliza JWT para autenticación.  
+El token se envía automáticamente en cada request mediante interceptor.
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+> La validación de seguridad es responsabilidad del backend.
+
+---
+
+## 🌍 Entornos
+
+Configuración en `src/environments/`:
+
+- `environment.ts` (producción)
+- `environment.development.ts` (desarrollo)
+- `environment.interface.ts` (estructura base)
+
+Ejemplo:
+
+```ts
+export const environment = {
+  production: false,
+  apiUrl: 'http://localhost:8080',
+};
