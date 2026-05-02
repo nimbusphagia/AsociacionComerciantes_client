@@ -2,9 +2,8 @@
 
 Interfaz web desarrollada en Angular para la gestión de socios, puestos, tarifas, deudas y pagos desde un panel centralizado.
 
----
 
-## 🚀 Tecnologías
+## Tecnologías
 
 - Angular 21 (standalone, signals, zoneless)
 - TypeScript
@@ -12,11 +11,10 @@ Interfaz web desarrollada en Angular para la gestión de socios, puestos, tarifa
 - Angular Router
 - HttpClient con interceptor JWT
 
----
 
-## ✨ Funcionalidades
+## Funcionalidades
 
-### 🔐 Autenticación
+### Autenticación
 - Login con email y contraseña
 - Token JWT almacenado en localStorage
 - Rutas protegidas mediante guard
@@ -24,52 +22,45 @@ Interfaz web desarrollada en Angular para la gestión de socios, puestos, tarifa
 
 ---
 
-### 📊 Dashboard
+### Dashboard
 - Resumen de socios, puestos y deudas
 - Indicador de deudas vencidas
 - Últimos pagos registrados
 
 ---
 
-### 👥 Socios
+### Socios
 - CRUD de socios
 - Vista detallada con:
   - Puestos asignados
   - Deudas pendientes
 
----
-
-### 🏪 Puestos
+### Puestos
 - CRUD de puestos
 - Asignación de socios
 - Puestos sin socio pertenecen a la asociación
 
----
 
-### 💰 Tarifas
+### Tarifas
 - CRUD de tarifas
 - Tipos de recurrencia:
   - Mensual
   - Anual
   - Único
 
----
 
-### 🧾 Deudas
+### Deudas
 - Generadas por **puesto**
 - Un socio con múltiples puestos tiene deudas independientes
 - Permite seleccionar múltiples deudas del mismo puesto para un solo pago
 - Registro de comprobantes (boleta o factura)
 
----
 
-### 💳 Pagos
+### Pagos
 - Historial de pagos
 - Visualización de comprobantes
 
----
-
-## 🔒 Seguridad
+## Seguridad
 
 El sistema utiliza JWT para autenticación.  
 El token se envía automáticamente en cada request mediante interceptor.
@@ -78,7 +69,7 @@ El token se envía automáticamente en cada request mediante interceptor.
 
 ---
 
-## 🌍 Entornos
+## Entornos
 
 Configuración en `src/environments/`:
 
