@@ -52,11 +52,6 @@ button {
   background: var(--bg-input);
 }
 
-.muted {
-  color: var(--text-muted);
-  font-size: 0.9rem;
-}
-
 .page {
   display: flex;
   flex-direction: column;
@@ -86,7 +81,7 @@ button {
 }
 
 .table th {
-  text-align: left;
+  text-align: center;
   padding: 0.6rem 1rem;
   color: var(--text-muted);
   border-bottom: 1px solid var(--border-color);
@@ -94,16 +89,29 @@ button {
 }
 
 .table td {
+  text-align: center;
   padding: 0.75rem 1rem;
   border-bottom: 1px solid var(--border-color);
   color: var(--text-main);
 }
 
+.table tr > * {
+  flex: 1;
+}
+
+tr.selected td {
+  background: var(--bg-input);
+}
+
+tr.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
 .badge {
-  padding: 0.25rem 0.6rem;
-  border-radius: 4px;
+  padding: 5px 12px;
+  border-radius: 3px;
   font-size: 0.8rem;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .badge.pendiente {
@@ -128,10 +136,68 @@ button {
   border: none;
   border-radius: 5px;
   font-size: 0.85rem;
+  font-weight: 600;
   cursor: pointer;
   transition: opacity 0.15s;
 }
 
 .btn:hover {
   opacity: 0.85;
+}
+
+.btnSecondary {
+  padding: 0.5rem 1rem;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.btnSecondary:hover {
+  border-color: var(--text-muted);
+}
+.checkbox {
+  display: inline-flex;
+  cursor: pointer;
+}
+
+.checkbox input {
+  display: none;
+}
+
+.checkmark {
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--bg-input);
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkbox input:checked + .checkmark {
+  background: var(--accent-blue);
+  border-color: var(--accent-blue);
+}
+
+.checkbox input:checked + .checkmark::after {
+  content: '';
+  width: 4px;
+  height: 8px;
+  border: 2px solid var(--bg-darker);
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg) translateY(-1px);
+}
+
+.checkbox input:disabled + .checkmark {
+  opacity: 0.3;
+  cursor: not-allowed;
 }

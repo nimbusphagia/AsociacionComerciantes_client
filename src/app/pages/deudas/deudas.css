@@ -4,38 +4,78 @@
   gap: 1.5rem;
 }
 
-.title {
-  font-size: 1.4rem;
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 1.2rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+}
+
+.panelTitle {
+  font-size: 1.1rem;
   color: var(--text-main);
 }
 
+.deudasPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 5px;
+}
 
-.badge.pendiente {
+.deudaPanel {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: var(--text-muted);
+  padding: 0.4rem 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.panelForm {
+  display: flex;
+  justify-content: end;
+  gap: 1.5rem;
+}
+
+.toggle {
+  display: flex;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.toggle button {
+  flex: 1;
+  padding: 0.5rem 1rem;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    color 0.15s;
+}
+
+.toggle button.active {
   background: var(--bg-input);
   color: var(--accent-yellow);
 }
 
-.badge.pagada {
-  background: var(--bg-input);
-  color: var(--accent-green);
+.pagoTotal {
+  font-size: inherit;
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
 }
 
-.badge.vencida {
-  background: var(--bg-input);
-  color: var(--accent-red);
-}
-
-.btn {
-  padding: 0.35rem 0.75rem;
-  background: var(--accent-blue);
-  color: var(--bg-darker);
-  border: none;
-  border-radius: 5px;
-  font-size: 0.85rem;
-  cursor: pointer;
-  transition: opacity 0.15s;
-}
-
-.btn:hover {
-  opacity: 0.85;
+.panelActions {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+  gap: 0.75rem;
 }

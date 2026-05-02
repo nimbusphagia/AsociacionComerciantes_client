@@ -1,44 +1,101 @@
 <div class="page">
-  <h1 class="title">Deudas Pendientes</h1>
+  <header>
+    <h1 class="title">Deudas Pendientes</h1>
 
-  @if (isLoading()) {
-    <p class="muted">Cargando...</p>
-  }
+    @if (isLoading()) {
+      <p class="muted">Cargando...</p>
+    }
+    @if (errorMessage()) {
+      <p class="error">{{ errorMessage() }}</p>
+    }
+    @if (!isLoading() && deudas().length === 0) {
+      <p class="muted">No hay deudas pendientes.</p>
+    }
+  </header>
 
-  @if (errorMessage()) {
-    <p class="error">{{ errorMessage() }}</p>
-  }
+  @if (mostrarForm()) {
+    <div class="panel">
+      <h2 class="panelTitle">Registrar Pago</h2>
 
-  @if (!isLoading() && deudas().length === 0) {
-    <p class="muted">No hay deudas pendientes.</p>
+      <div class="panelForm">
+        <div class="panelToggle">
+          <div class="toggle">
+            <button
+              [class.active]="tipoComprobante() === 'BOLETA'"
+              (click)="tipoComprobante.set('BOLETA')"
+            >
+              Boleta
+            </button>
+            <button
+              [class.active]="tipoComprobante() === 'FACTURA'"
+              (click)="tipoComprobante.set('FACTURA')"
+            >
+              Factura
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="deudasPanel">
+        @for (deuda of selectedDeudas(); track deuda.id) {
+          <div class="deudaPanel">
+            <span>{{ deuda.nombreSocio }} - {{ deuda.periodo }}</span>
+            <span>{{ deuda.montoTotal | currency: 'PEN' }}</span>
+          </div>
+        }
+      </div>
+
+      @if (pagoError()) {
+        <p class="error">{{ pagoError() }}</p>
+      }
+      <div class="pagoTotal">
+        <p>Monto a pagar:</p>
+        <p class="pagoTotalCantidad">{{ montoCalculado() | currency: 'PEN' }}</p>
+      </div>
+      <div class="panelActions">
+        <button class="btnSecondary" (click)="cerrarForm()">Cancelar</button>
+        <button class="btn" [disabled]="pagoLoading()" (click)="confirmarPago()">
+          {{ pagoLoading() ? 'Registrando...' : 'Confirmar Pago' }}
+        </button>
+      </div>
+    </div>
   }
 
   @if (!isLoading() && deudas().length > 0) {
     <table class="table">
       <thead>
         <tr>
+          <th></th>
+          <th>Socio</th>
           <th>Período</th>
           <th>Vencimiento</th>
           <th>Monto</th>
           <th>Estado</th>
-          <th></th>
         </tr>
       </thead>
       <tbody>
         @for (deuda of deudas(); track deuda.id) {
-          <tr>
+          <tr [class.selected]="isSelected(deuda)" [class.disabled]="isDisabled(deuda)">
+            <td style="max-width: fit-content; padding: 0">
+              @if (deuda.estado !== 'PAGADO') {
+                <label class="checkbox">
+                  <input
+                    type="checkbox"
+                    [checked]="isSelected(deuda)"
+                    [disabled]="isDisabled(deuda)"
+                    (change)="toggleDeuda(deuda)"
+                  />
+                  <span class="checkmark"></span>
+                </label>
+              }
+            </td>
+            <td>{{ deuda.nombreSocio }}</td>
             <td>{{ deuda.periodo }}</td>
-            <td>{{ deuda.fechaVencimiento | date:'dd/MM/yyyy' }}</td>
-            <td>{{ deuda.montoTotal | currency:'PEN' }}</td>
+            <td>{{ deuda.fechaVencimiento | date: 'dd/MM/yyyy' }}</td>
+            <td>{{ deuda.montoTotal | currency: 'PEN' }}</td>
             <td>
               <span class="badge" [class]="deuda.estado.toLowerCase()">
                 {{ deuda.estado }}
               </span>
-            </td>
-            <td>
-              <button class="btn" (click)="registrarPago(deuda)">
-                Registrar Pago
-              </button>
             </td>
           </tr>
         }

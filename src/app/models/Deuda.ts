@@ -7,6 +7,8 @@ export interface DeudaDetalle {
 
 export interface Deuda {
   id: number;
+  socioId: number;
+  nombreSocio: string;
   periodo: string;
   montoTotal: number;
   estado: 'PENDIENTE' | 'PAGADO' | 'VENCIDO';
