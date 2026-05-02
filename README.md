@@ -20,14 +20,10 @@ Interfaz web desarrollada en Angular para la gestión de socios, puestos, tarifa
 - Rutas protegidas mediante guard
 - Interceptor que adjunta el token en cada petición
 
----
-
 ### Dashboard
 - Resumen de socios, puestos y deudas
 - Indicador de deudas vencidas
 - Últimos pagos registrados
-
----
 
 ### Socios
 - CRUD de socios
@@ -67,7 +63,6 @@ El token se envía automáticamente en cada request mediante interceptor.
 
 > La validación de seguridad es responsabilidad del backend.
 
----
 
 ## Entornos
 
