@@ -38,7 +38,10 @@
       <div class="deudasPanel">
         @for (deuda of selectedDeudas(); track deuda.id) {
           <div class="deudaPanel">
-            <span>{{ deuda.nombreSocio }} - {{ deuda.periodo }}</span>
+            <span
+              >{{ deuda.nombreSocio }} - {{ deuda.nombrePuesto }} -
+              {{ deuda.periodo | date: 'MMM' }}</span
+            >
             <span>{{ deuda.montoTotal | currency: 'PEN' }}</span>
           </div>
         }
@@ -66,6 +69,7 @@
         <tr>
           <th></th>
           <th>Socio</th>
+          <th>Puesto</th>
           <th>Período</th>
           <th>Vencimiento</th>
           <th>Monto</th>
@@ -89,7 +93,8 @@
               }
             </td>
             <td>{{ deuda.nombreSocio }}</td>
-            <td>{{ deuda.periodo }}</td>
+            <td>{{ deuda.nombrePuesto }}</td>
+            <td>{{ deuda.periodo | date: 'MMM yyyy' }}</td>
             <td>{{ deuda.fechaVencimiento | date: 'dd/MM/yyyy' }}</td>
             <td>{{ deuda.montoTotal | currency: 'PEN' }}</td>
             <td>

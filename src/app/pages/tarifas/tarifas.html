@@ -1,0 +1,126 @@
+<div class="page">
+  <header class="pageHeader">
+    <h1 class="title">Gestión de Tarifas</h1>
+    <button class="btn" (click)="abrirCrearModal()">+ Nueva Tarifa</button>
+  </header>
+
+  @if (isLoading()) {
+    <p class="muted">Cargando tarifas...</p>
+  }
+  @if (errorMessage()) {
+    <p class="error">{{ errorMessage() }}</p>
+  }
+  @if (deleteError()) {
+    <p class="error">{{ deleteError() }}</p>
+  }
+  @if (!isLoading() && tarifas().length === 0) {
+    <p class="muted">No hay tarifas registradas.</p>
+  }
+
+  @if (!isLoading() && tarifas().length > 0) {
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Monto</th>
+          <th>Recurrencia</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (tarifa of tarifas(); track tarifa.id) {
+          <tr>
+            <td>
+              <strong>{{ tarifa.nombre }}</strong>
+            </td>
+            <td>{{ tarifa.monto | currency: 'PEN' }}</td>
+            <td>
+              <span class="badge" [class]="tarifa.recurrencia.toLowerCase()">
+                {{ tarifa.recurrencia }}
+              </span>
+            </td>
+            <td>
+              <div class="actionsCell">
+                <button class="actionBtn" (click)="abrirEditarModal(tarifa)">Editar</button>
+                <button
+                  class="dangerBtn actionBtn"
+                  (click)="eliminarTarifa(tarifa.id)"
+                  [disabled]="eliminando() === tarifa.id || !tarifa.activo"
+                  [title]="!tarifa.activo ? 'Esta tarifa ya está desactivada' : ''"
+                >
+                  {{ eliminando() === tarifa.id ? '...' : 'Eliminar' }}
+                </button>
+              </div>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+
+  @if (mostrarModal()) {
+    <div class="modalOverlay">
+      <div class="panel modal">
+        <h2 class="panelTitle">
+          {{ esEdicion() ? 'Editar Tarifa' : 'Nueva Tarifa' }}
+        </h2>
+
+        <div class="formGroup">
+          <label class="label">Nombre</label>
+          <input
+            type="text"
+            class="input"
+            placeholder="Ej. Cuota Mensual"
+            [(ngModel)]="tarifaForm().nombre"
+          />
+        </div>
+
+        <div class="formRow">
+          <div class="formGroup">
+            <label class="label">Monto (PEN)</label>
+            <input
+              type="number"
+              class="input"
+              placeholder="0.00"
+              [(ngModel)]="tarifaForm().monto"
+            />
+          </div>
+          <div class="formGroup">
+            <label class="label">Recurrencia</label>
+            <div class="toggle">
+              <button
+                [class.active]="tarifaForm().recurrencia === 'MENSUAL'"
+                (click)="tarifaForm().recurrencia = 'MENSUAL'"
+              >
+                Mensual
+              </button>
+              <button
+                [class.active]="tarifaForm().recurrencia === 'ANUAL'"
+                (click)="tarifaForm().recurrencia = 'ANUAL'"
+              >
+                Anual
+              </button>
+              <button
+                [class.active]="tarifaForm().recurrencia === 'UNICO'"
+                (click)="tarifaForm().recurrencia = 'UNICO'"
+              >
+                Único
+              </button>
+            </div>
+          </div>
+        </div>
+
+        @if (formError()) {
+          <p class="error">{{ formError() }}</p>
+        }
+
+        <div class="panelActions">
+          <button class="btnSecondary" (click)="cerrarModal()">Cancelar</button>
+          <button class="btn" [disabled]="guardando()" (click)="guardarTarifa()">
+            {{ guardando() ? 'Guardando...' : esEdicion() ? 'Actualizar' : 'Registrar' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</div>

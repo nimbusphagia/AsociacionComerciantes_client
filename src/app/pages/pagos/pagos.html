@@ -1,0 +1,96 @@
+<div class="page">
+  <header class="pageHeader">
+    <h1 class="title">Pagos</h1>
+  </header>
+
+  @if (isLoading()) {
+    <p class="muted">Cargando pagos...</p>
+  }
+  @if (errorMessage()) {
+    <p class="error">{{ errorMessage() }}</p>
+  }
+  @if (!isLoading() && pagos().length === 0) {
+    <p class="muted">No hay pagos registrados.</p>
+  }
+
+  @if (!isLoading() && pagos().length > 0) {
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Socio</th>
+          <th>Monto</th>
+          <th>Fecha</th>
+          <th>Deudas cubiertas</th>
+          <th>Comprobante</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (pago of pagos(); track pago.id) {
+          <tr>
+            <td class="muted">{{ pago.id }}</td>
+            <td>
+              <strong>{{ pago.nombreSocio }}</strong>
+            </td>
+            <td>{{ pago.montoTotal | currency: 'PEN' }}</td>
+            <td>{{ pago.fecha | date: 'dd/MM/yyyy' }}</td>
+            <td class="muted">{{ pago.deudas.length }} deuda(s)</td>
+            <td>
+              <div class="actionsCell">
+                <button class="actionBtn" (click)="verComprobante(pago.id)">Ver comprobante</button>
+              </div>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+
+  @if (mostrarModal()) {
+    <div class="modalOverlay" (click)="cerrarModal()">
+      <div class="panel modal comprobante" (click)="$event.stopPropagation()">
+        @if (comprobanteLoading()) {
+          <p class="muted">Cargando comprobante...</p>
+        }
+        @if (comprobanteError()) {
+          <p class="error">{{ comprobanteError() }}</p>
+        }
+
+        @if (comprobante()) {
+          <div class="comprobanteHeader">
+            <div>
+              <h2 class="panelTitle">{{ comprobante()!.tipo }}</h2>
+              <p class="muted">N° {{ comprobante()!.numeroCorrelativo }}</p>
+            </div>
+            <span class="badge" [class]="comprobante()!.tipo.toLowerCase()">
+              {{ comprobante()!.tipo }}
+            </span>
+          </div>
+
+          <div class="comprobanteBody">
+            <div class="comprobanteRow">
+              <span class="muted">Socio</span>
+              <span>{{ comprobante()!.nombreSocio }}</span>
+            </div>
+            <div class="comprobanteRow">
+              <span class="muted">Fecha de emisión</span>
+              <span>{{ comprobante()!.fechaEmision | date: 'dd/MM/yyyy' }}</span>
+            </div>
+            <div class="comprobanteRow">
+              <span class="muted">Pago N°</span>
+              <span>{{ comprobante()!.pagoId }}</span>
+            </div>
+            <div class="comprobanteRow total">
+              <span>Total</span>
+              <span>{{ comprobante()!.montoTotal | currency: 'PEN' }}</span>
+            </div>
+          </div>
+        }
+
+        <div class="panelActions">
+          <button class="btnSecondary" (click)="cerrarModal()">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  }
+</div>

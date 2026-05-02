@@ -1,0 +1,44 @@
+.pageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+.badge.mensual {
+  background: var(--bg-input);
+  color: var(--accent-blue);
+}
+
+.badge.anual {
+  background: var(--bg-input);
+  color: var(--accent-purple);
+}
+
+.badge.unico {
+  background: var(--bg-input);
+  color: var(--accent-orange);
+}
+
+.badge.activo {
+  background: var(--bg-input);
+  color: var(--accent-green);
+}
+
+.badge.inactivo {
+  background: var(--bg-input);
+  color: var(--text-muted);
+}
+.actionsCell {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.actionsCell > * {
+  flex: 1;
+  margin: auto;
+}
+.formRow {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

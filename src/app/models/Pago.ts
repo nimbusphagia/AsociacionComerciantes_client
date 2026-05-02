@@ -1,3 +1,5 @@
+import { Deuda } from './Deuda';
+
 export interface PagoRequest {
   socioId: number;
   deudaIds: number[];
@@ -9,6 +11,6 @@ export interface PagoResponse {
   socioId: number;
   nombreSocio: string;
   montoTotal: number;
-  fecha: string;
-  deudaIds: number[];
+  fecha: Date;
+  deudas: Deuda[];
 }

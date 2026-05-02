@@ -1,0 +1,55 @@
+.comprobante {
+  max-width: 420px;
+  width: 100%;
+}
+
+.comprobanteHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.comprobanteBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.comprobanteRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.65rem 1rem;
+  font-size: 0.9rem;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-main);
+}
+
+.comprobanteRow:last-child {
+  border-bottom: none;
+}
+
+.comprobanteRow.total {
+  font-weight: 600;
+  color: var(--accent-yellow);
+  background: var(--bg-input);
+}
+
+.badge.boleta {
+  background: var(--bg-input);
+  color: var(--accent-blue);
+}
+
+.badge.factura {
+  background: var(--bg-input);
+  color: var(--accent-purple);
+}
+.actionsCell {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
