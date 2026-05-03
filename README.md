@@ -1,4 +1,4 @@
-# Sistema de Gestión de Mercado — Frontend
+# Asociacion de comerciantes — Frontend
 
 Interfaz web desarrollada en Angular para la gestión de socios, puestos, tarifas, deudas y pagos desde un panel centralizado.
 
